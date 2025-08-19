@@ -56,3 +56,9 @@ export interface Items {
   link : string
   icon: IconName
 }
+
+export interface Props<T> {
+  data: T;
+  setData: (data: T) => void;
+  isLoading: boolean;
+}

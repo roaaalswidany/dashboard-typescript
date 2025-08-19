@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AuthForm from "../components/AuthForm/AuthForm";
-import { data, replace, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import type { LogInData } from "../interface";
@@ -47,9 +47,10 @@ const LogIn = () => {
 
       const { token, user } = response.data;
       
-/*      if (user.image_url) {
+     if (user.image_url) {
   user.image_url = `https://vica.website/storage/${user.image_url}`;
-} */
+}
+    console.log(token)
 
       if (!response.data?.token) {
         throw new Error("Invalid response structure");

@@ -14,8 +14,9 @@ const EditItems = () => {
     image: null,
     price: "",
     name: "",
+    id: 0,
   });
-
+console.log(formData)
   useEffect(() => {
     if (!id) {
       navigate("/dashboard/items");
@@ -38,8 +39,10 @@ const EditItems = () => {
           image: null,
           price: response.data.data?.price || response.data?.price || "",
           name: response.data.data?.name || response.data?.name || "",
+          id:0,
         });
-      } catch (error) {
+      } catch (error: unknown) {
+        console.log(error)
         toast.error("Failed to load product");
         navigate("/dashboard/items");
       } finally {
@@ -72,7 +75,7 @@ const EditItems = () => {
           },
         }
       );
-
+      console.log(response)
       toast.success("Product updated successfully!");
       navigate("/dashboard/items");
     } catch (error) {

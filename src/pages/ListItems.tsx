@@ -3,14 +3,14 @@ import { useContext } from "react";
 import { SearchContext } from "./Dashboard";
 import axios from "axios";
 import Cards from "../components/Cards/Cards";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import type { Product } from "../interface";
 
 const ListItems = () => {
   const search = useContext(SearchContext);
   const [allProducts, setAllProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 4;
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -56,7 +56,7 @@ const ListItems = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {currentProducts.map((product) => (
+        {currentProducts.map((product : Product) => (
           <Cards
             key={product.id}
             id={product.id}

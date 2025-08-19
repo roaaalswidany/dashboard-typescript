@@ -1,8 +1,9 @@
-import { useState, useRef, ChangeEvent, FormEvent } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi";
+import type {FormEvent, ChangeEvent} from "react"
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
