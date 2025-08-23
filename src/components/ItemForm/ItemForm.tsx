@@ -18,9 +18,17 @@ interface ItemFormProps {
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
+interface FormProduct extends Omit<Product, "id"> {
+  id?: number
+  name? : string
+  price?: string
+}
+
+
 const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
   const [imageUrl, setImageUrl] = useState<string>(oldData?.image_url || "");
-  const formData = useRef<Product>({ ...oldData, image: null });
+  const tempData: FormProduct = { ...oldData, image: null, name: oldData?.name || ''}
+  const formData = useRef<Product>(tempData as Product);
 
   const submitProduct = async (productData: Product) => {
     try {

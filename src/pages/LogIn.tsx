@@ -9,6 +9,10 @@ const LogIn = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [loginData, setLoginData] = useState<LogInData>({
+    email: "",
+    password: ""
+  });
 
   useEffect(() => {
     if (location.search.includes("logout success")) {
@@ -47,18 +51,17 @@ const LogIn = () => {
 
       const { token, user } = response.data;
 
+
       if (user.image_url) {
-        user.image_url = `user.image_url = https://vica.website/storage/images/${user.image_url};`;
+        user.image_url = `https://vica.website/storage/images/${user.image_url}`;
       }
 
-      console.log(token)
-
-      if (!response.data?.token) {
+      if (!token) {
         throw new Error("Invalid response structure");
       }
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userInfo", JSON.stringify(response.data.user));
+      localStorage.setItem("token", token);
+      localStorage.setItem("userInfo", JSON.stringify(user));
 
       toast.success("Login successful!");
       navigate("/dashboard");
@@ -103,8 +106,10 @@ const LogIn = () => {
         description: "Don't have an account?",
         link: { content: "Create Account", url: "/signup" },
       }}
-      setData={handleSubmit} 
-      isLoading={isLoading} 
+      data={loginData}
+      setData={setLoginData}
+      onSubmit={handleSubmit}
+      isLoading={isLoading}
     />
   );
 };

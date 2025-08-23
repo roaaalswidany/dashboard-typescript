@@ -43,10 +43,10 @@ export interface Products extends CardProps {
 }
 
 export interface Product {
-  id: number;
+  id?: number;
   image: Blob | null;
-  price: string;
-  name: string;
+  price?: string;
+  name?: string;
   image_url?: string;
   setData?: (Product: Product) => void;
 }
@@ -59,6 +59,24 @@ export interface Items {
 
 export interface Props<T> {
   data: T;
-  setData: (data: React.SetStateAction<T>) => void | Promise<void>;
-  isLoading: boolean;
+  setData: Dispatch<SetStateAction<T>>;
+  onsubmitHandler?: (data: T) => Promise<void>; 
+  isLoading?: boolean; 
+  title: string;
+  description: string;
+  inputs: {
+    label: string;
+    placeholder: string;
+    type: string;
+    name: string;
+    required: boolean;
+  }[];
+  btn: string;
+  footer: {
+    description: string;
+    link: {
+      content: string;
+      url: string;
+    };
+  };
 }

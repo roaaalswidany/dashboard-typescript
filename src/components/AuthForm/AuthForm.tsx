@@ -18,7 +18,10 @@ interface Props<T> {
   }>;
   btn: string;
   footer: { description: string; link: { url: string; content: string } };
+  data: T
   setData: Dispatch<SetStateAction<T>>;
+  onsubmitHandler?: (data: T) => Promise<void>; 
+  isLoading?: boolean
 }
 
 const AuthForm = <T extends object>({
@@ -28,6 +31,7 @@ const AuthForm = <T extends object>({
   btn,
   footer,
   setData,
+  onsubmitHandler,
 }: Props<T>) => {
   const [formData, setFormData] = useState<T>({} as T);
 
@@ -37,12 +41,26 @@ const AuthForm = <T extends object>({
       ...prev,
       [name]: type === "file" ? files?.[0] : value,
     }));
+      setData((prev) => ({
+      ...prev,
+      [name]: type === "file" ? files?.[0] : value,
+    }));
   };
 
-  const sendData = (event: FormEvent) => {
-    event.preventDefault();
-    setData(formData);
-  };
+
+const sendData = async (event: FormEvent) => {
+  event.preventDefault();
+  
+  try {
+    if (typeof onsubmitHandler === 'function') {
+      await onsubmitHandler(formData);
+    } else {
+      setData(formData);
+    }
+  } catch (error) {
+    console.error('Submission error:', error);
+  }
+};
 
   return (
     <form
