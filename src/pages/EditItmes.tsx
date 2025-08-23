@@ -58,8 +58,8 @@ console.log(formData)
       setLoading(true);
       const formData = new FormData();
       formData.append("_method", "PUT");
-      formData.append("name", updatedProduct.name);
-      formData.append("price", updatedProduct.price);
+      formData.append("name", updatedProduct.name || "");
+      formData.append("price", updatedProduct.price || "");
 
       if (updatedProduct.image) {
         formData.append("image", updatedProduct.image);

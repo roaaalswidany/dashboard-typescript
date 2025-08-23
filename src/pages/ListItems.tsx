@@ -30,7 +30,7 @@ const ListItems = () => {
 
   const filteredProducts = useMemo(() => {
     return allProducts.filter((product) =>
-      product.name.toLowerCase().includes(search.toLowerCase())
+      product.name?.toLowerCase().includes(search.toLowerCase())
     );
   }, [allProducts, search]);
 
@@ -59,7 +59,7 @@ const ListItems = () => {
         {currentProducts.map((product : Product) => (
           <Cards
             key={product.id}
-            id={product.id}
+            id={product.id || 0}
             name={product.name}
             image_url={product.image_url}
             price={product.price}

@@ -108,7 +108,7 @@ const LogIn = () => {
       }}
       data={loginData}
       setData={setLoginData}
-      onSubmit={handleSubmit}
+      onsubmitHandler={handleSubmit}
       isLoading={isLoading}
     />
   );
