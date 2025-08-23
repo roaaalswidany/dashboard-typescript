@@ -59,6 +59,6 @@ export interface Items {
 
 export interface Props<T> {
   data: T;
-  setData: (data: T) => void;
+  setData: (data: React.SetStateAction<T>) => void | Promise<void>;
   isLoading: boolean;
 }

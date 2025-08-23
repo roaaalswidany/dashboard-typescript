@@ -9,6 +9,7 @@ const CreateItems = () => {
     image: null,
     price: "",
     name: "",
+    id: 0,
   });
 
   const navigate = useNavigate();

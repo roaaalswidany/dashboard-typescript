@@ -8,7 +8,7 @@ import type { Product } from "../interface";
 
 const ListItems = () => {
   const search = useContext(SearchContext);
-  const [allProducts, setAllProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 4;
 

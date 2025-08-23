@@ -35,6 +35,7 @@ const SideBar = ({ logo, items }: Props) => {
           },
         }
       );
+    console.log(response)
 
       localStorage.removeItem("token");
       localStorage.removeItem("userInfo");

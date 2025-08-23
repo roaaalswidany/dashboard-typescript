@@ -20,7 +20,7 @@ const LogIn = () => {
       axios
         .get("https://vica.website/api/user", {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, 
           },
         })
         .then(() => navigate("/dashboard", { replace: true }))
@@ -46,11 +46,12 @@ const LogIn = () => {
       );
 
       const { token, user } = response.data;
-      
-     if (user.image_url) {
-  user.image_url = `https://vica.website/storage/${user.image_url}`;
-}
-    console.log(token)
+
+      if (user.image_url) {
+        user.image_url = `user.image_url = https://vica.website/storage/images/${user.image_url};`;
+      }
+
+      console.log(token)
 
       if (!response.data?.token) {
         throw new Error("Invalid response structure");
@@ -85,7 +86,7 @@ const LogIn = () => {
     },
     {
       label: "Password:",
-      placeholder: "********",
+      placeholder: "",
       type: "password",
       name: "password",
       required: true,
@@ -102,8 +103,8 @@ const LogIn = () => {
         description: "Don't have an account?",
         link: { content: "Create Account", url: "/signup" },
       }}
-      setData={(data) => handleSubmit(data)}
-      isLoading={isLoading}
+      setData={handleSubmit} 
+      isLoading={isLoading} 
     />
   );
 };
