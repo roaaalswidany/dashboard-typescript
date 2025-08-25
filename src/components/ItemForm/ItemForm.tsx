@@ -48,9 +48,6 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
 
       if (imageFile) {
         formDataToSend.append("image", imageFile);
-      } else if (oldData?.image_url && !imageFile) {
-        // إذا كان تعديل ولم يتم تغيير الصورة
-        formDataToSend.append("image", oldData.image_url);
       }
 
       if (oldData?.id) {
@@ -76,7 +73,6 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
           : "Product created successfully!"
       );
 
-      // فقط إذا كان setData موجوداً (للتحديث في الوالد)
       if (setData) {
         setData({
           ...productData,
@@ -105,9 +101,9 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    event.stopPropagation(); // إضافة مهمة
+    event.stopPropagation(); 
     
-    if (loading) return; // منع double submission
+    if (loading) return; 
     
     submitProduct(formState);
   };
