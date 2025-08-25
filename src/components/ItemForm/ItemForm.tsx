@@ -1,5 +1,4 @@
 import {
-  useRef,
   useState,
   type ChangeEvent,
   type Dispatch,
@@ -19,18 +18,22 @@ interface ItemFormProps {
 }
 
 interface FormProduct extends Omit<Product, "id"> {
-  id?: number
-  name? : string
-  price?: string
+  id?: number;
+  name?: string;
+  price?: string;
 }
-
 
 const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
   const [imageUrl, setImageUrl] = useState<string>(oldData?.image_url || "");
-  const tempData: FormProduct = { ...oldData, image: null, name: oldData?.name || ''}
-  const formData = useRef<Product>(tempData as Product);
+  const [formState, setFormState] = useState<FormProduct>({
+    name: oldData?.name || "",
+    price: oldData?.price || "",
+    image: null,
+  });
 
-  const submitProduct = async (productData: Product) => {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const submitProduct = async (productData: FormProduct) => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
@@ -40,11 +43,14 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
       }
 
       const formDataToSend = new FormData();
-      formDataToSend.append("name", productData.name || oldData?.name || "");
-      formDataToSend.append("price", productData.price || oldData?.price || "");
+      formDataToSend.append("name", productData.name || "");
+      formDataToSend.append("price", productData.price || "");
 
-      if (productData.image) {
-        formDataToSend.append("image", productData.image);
+      if (imageFile) {
+        formDataToSend.append("image", imageFile);
+      } else if (oldData?.image_url && !imageFile) {
+        // إذا كان تعديل ولم يتم تغيير الصورة
+        formDataToSend.append("image", oldData.image_url);
       }
 
       if (oldData?.id) {
@@ -70,11 +76,12 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
           : "Product created successfully!"
       );
 
+      // فقط إذا كان setData موجوداً (للتحديث في الوالد)
       if (setData) {
         setData({
           ...productData,
-          id: response.data.id || oldData?.id,
-          image_url: response.data.image_url || imageUrl || oldData?.image_url,
+          id: response.data.id || oldData?.id || 0,
+          image: imageFile,
         });
       }
     } catch (error) {
@@ -98,17 +105,26 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    submitProduct(formData.current);
+    event.stopPropagation(); // إضافة مهمة
+    
+    if (loading) return; // منع double submission
+    
+    submitProduct(formState);
   };
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.[0]) {
-      formData.current = {
-        ...formData.current,
-        image: event.target.files[0],
-      };
-      setImageUrl(URL.createObjectURL(event.target.files[0]));
+      const file = event.target.files[0];
+      setImageFile(file);
+      setImageUrl(URL.createObjectURL(file));
     }
+  };
+
+  const handleInputChange = (field: keyof FormProduct, value: string) => {
+    setFormState(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   return (
@@ -124,8 +140,8 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
               placeholder="Enter product name"
               id="name"
               className="block w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => (formData.current.name = e.target.value)}
-              defaultValue={oldData?.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              value={formState.name}
               required
             />
           </div>
@@ -139,8 +155,8 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
               placeholder="Enter product price"
               id="price"
               className="block w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => (formData.current.price = e.target.value)}
-              defaultValue={oldData?.price}
+              onChange={(e) => handleInputChange('price', e.target.value)}
+              value={formState.price}
               required
             />
           </div>
@@ -179,7 +195,7 @@ const ItemForm = ({ setData, oldData, loading, setLoading }: ItemFormProps) => {
             className="hidden"
             onChange={handleImageChange}
             accept="image/*"
-            required={!oldData}
+            required={!oldData && !imageFile}
           />
         </div>
       </div>
