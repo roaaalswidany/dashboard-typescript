@@ -43,7 +43,7 @@ const LogIn = () => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Accept: "application/json",
           },
         }
@@ -52,8 +52,8 @@ const LogIn = () => {
       const { token, user } = response.data;
 
 
-      if (user.image_url) {
-        user.image_url = `https://vica.website/storage/images/${user.image_url}`;
+      if (user.profile_image_url) {
+        user.profile_image_url = `${user.profile_image_url}`;
       }
 
       if (!token) {

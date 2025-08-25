@@ -66,7 +66,7 @@ const NavBar = ({ setSearch, setMode }: Props) => {
             </div>
           )}
 
-          <div className="hidden sm:block text-right">
+          <div className="sm:block text-right">
             <p className="font-medium dark:text-white text-sm sm:text-base">
               {userInfo.first_name} {userInfo.last_name}
             </p>
@@ -77,7 +77,7 @@ const NavBar = ({ setSearch, setMode }: Props) => {
         </div>
         <button
           onClick={() => setMode(!mode)}
-          className="cursor-pointer p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          className="cursor-pointer p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hidden md:flex"
           aria-label={mode ? "Switch to light mode" : "Switch to dark mode"}
         >
           {mode ? (

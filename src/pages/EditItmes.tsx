@@ -76,7 +76,6 @@ console.log(formData)
         }
       );
       console.log(response)
-      toast.success("Product updated successfully!");
       navigate("/dashboard/items");
     } catch (error) {
       console.error("Update error:", error);
@@ -92,7 +91,7 @@ console.log(formData)
   };
 
   if (loading && !product) {
-    return <div>Loading product data...</div>;
+    return <div className=" text-black dark:text-white">Loading product data...</div>;
   }
 
   if (!product) {

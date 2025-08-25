@@ -5,7 +5,7 @@ const QRPage = () => {
   const siteURL = "dashboard-typescript-git-main-roaaalswidanys-projects.vercel.app";
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 px-4">
+    <div className="flex flex-col items-center justify-center h-[87vh] bg-gray-100 dark:bg-gray-900 px-4">
       <h1 className="text-2xl font-bold mb-6 text-black dark:text-white text-center">
         Scan QR to Open Project
       </h1>

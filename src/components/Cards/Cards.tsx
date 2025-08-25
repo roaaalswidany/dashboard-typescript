@@ -25,8 +25,10 @@ const Cards = ({ id, image_url, name, price, setItemDelet }: CardProps) => {
       if (setItemDelet) setItemDelet(id);
     } catch (error) {
       toast.error("Failed to delete product");
+        console.log(error)
     }
   };
+
 
   const [isFavorite, setIsFavorite] = useState(false);
 

@@ -100,7 +100,7 @@ const SideBar = ({ logo, items }: Props) => {
           </ul>
 
           <button
-            className="cursor-pointer w-[180px] h-10 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors mt-4"
+            className="cursor-pointer w-[180px] h-10 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors mt-4 sm:mt-1"
             onClick={() => setShowLogoutCon(true)}
           >
             Log Out
